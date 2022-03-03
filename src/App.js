@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import './App.css'
 import butcherPig from './assets/butcherPig.jpeg'
 
-class App extends Component{
-  constructor(props){
+class App extends Component {
+  constructor(props) {
     super(props)
     // the state object holds information that can be displayed to the user and updated throughout the program
     this.state = {
@@ -18,39 +18,55 @@ class App extends Component{
   // The "myPigLatinCodeHere" function is where you will put your logic to convert the sentence entered by the user to Pig Latin
 
   myPigLatinCodeHere = () => {
-    // the variable "userInput" will contain the text input from the user modified into an array of words
-    // no need to change this variable
+    //   // the variable "userInput" will contain the text input from the user modified into an array of words
+    //   // no need to change this variable
     let userInput = this.state.phrase.split(" ")
     console.log("userInput:", userInput)
+    function translatePigLatin(str) {
+      let vowels = ['a', 'e', 'i', 'o', 'u'];
+      let newStr = "";
+      if (vowels.indexOf(str[0]) > -1) {
+        newStr = str + "way";
+        return newStr;
+      } else {
+        let firstMatch = str.match(/[aeiou]/g) || 0;
+        let vowel = str.indexOf(firstMatch[0]);
+        newStr = str.substring(vowel) + str.substring(0, vowel) + "ay";
+        return newStr;
+      }
+    }
 
-    // now that we have an array of words, we can map over the array and access each word
-    let translatedWordsArray = userInput.map(currentWord => {
-      // ACTION ITEM: use "currentWord" as a starting point for your code
-      console.log("currentWord:", currentWord)
+    //   // now that we have an array of words, we can map over the array and access each word
+    //   let translatedWordsArray = userInput.map(currentWord => {
+    //     // ACTION ITEM: use "currentWord" as a starting point for your code
+    //     console.log("currentWord:", currentWord)
 
-      let vowelsArray = currentWord.split("").filter(vowel => {
-        return vowel === "a" || vowel === "e" || vowel === "i" || vowel === "o" || vowel === "u"
-      })
-      console.log("vowelsArray:", vowelsArray)
+    //     let vowelsArray = currentWord.split("").filter(vowel => {
+    //       return vowel === "a" || vowel === "e" || vowel === "i" || vowel === "o" || vowel === "u"
+    //     })
+    //     console.log("vowelsArray:", vowelsArray)
 
-      // your code here!
+    //     // your code here!
 
-      // Remember: console.log is your friend :)
+    //     // Remember: console.log is your friend :)
 
 
-      // ACTION ITEM: change the value of currentWord to the name of whatever variable you made containing your Pig Latin'd word
-      return currentWord
-    })
+    //     // ACTION ITEM: change the value of currentWord to the name of whatever variable you made containing your Pig Latin'd word
+    //     return currentWord
+    //   })
 
 
     // joining the array back to a string of translated words
     // no need to change this variable
-    let translatedWords = translatedWordsArray.join(" ")
+    let translatedWords = translatePigLatin(this.state.phrase)
     console.log("translatedWords:", translatedWords)
 
     // the setState method will take your information from "translatedWords" and update the state object that is displayed to the user
+
+
+
     // no need to change this method
-    this.setState({phraseTranslated: translatedWords})
+    this.setState({ phraseTranslated: translatedWords })
   }
 
   restartGame = () => {
@@ -72,7 +88,7 @@ class App extends Component{
   // no need to modify this method
   handleInput = (e) => {
     // this method takes the input and saves the value in this.state.phrase so we can use the input in our program
-    this.setState({phrase: e.target.value})
+    this.setState({ phrase: e.target.value })
   }
 
   render() {
